@@ -225,28 +225,3 @@ run;quit;
  \___|_| |_|\__,_|
 
 */
-
-
-
-
-ptions ls=80 ps=44;
-data beta1;
-  do x=0.01 to 0.99 by .001;
-    y=pdf('BETA',x,.15,.15) ;
-    select;
-      when (x=0 or x>.9998                               ) output;
-      when (x > .99            and rand('UNIFORM') < .08 ) output;
-      when (x < .015           and rand('UNIFORM') < .10 ) output;
-      when (.005 < x < .995    and rand('UNIFORM') < .005) output;
-      otherwise;
-    end;
-    output;
-  end;
-run;quit;
-
-options ls=64 ps=32;
-data fix;
-  set beta1;
-  if  .01 < x < .99 then  y=y+rand('NORMAL',0,.02);
-  put x 7.4 y 6.3 @@;
-run;quit;
